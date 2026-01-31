@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+<<<<<<< HEAD
   <title>Excel'den İngilizce Quiz</title>
   <style>
     body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; margin: 24px; max-width: 760px; }
@@ -115,6 +116,443 @@
     let current = null; // {id,en,tr,mode,prompt,answer}
     let score = 0;
     let total = 0;
+=======
+  <title>English Quiz • Excel’den</title>
+  <style>
+    :root{
+      --bg: #0b1020;
+      --panel: rgba(255,255,255,.08);
+      --panel2: rgba(255,255,255,.06);
+      --stroke: rgba(255,255,255,.12);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.65);
+      --muted2: rgba(255,255,255,.45);
+      --good: #26d07c;
+      --bad: #ff4d6d;
+      --accent: #7c5cff;
+      --accent2: #2ee6d6;
+      --shadow: 0 20px 60px rgba(0,0,0,.35);
+      --radius: 18px;
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 600px at 15% 10%, rgba(124,92,255,.35), transparent 60%),
+        radial-gradient(900px 500px at 85% 25%, rgba(46,230,214,.25), transparent 55%),
+        radial-gradient(900px 600px at 50% 110%, rgba(255,77,109,.18), transparent 55%),
+        linear-gradient(180deg, #070a14, #0b1020 55%, #070a14);
+      min-height:100vh;
+    }
+
+    .wrap{
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 18px 16px 32px;
+    }
+
+    /* Top bar */
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding: 14px 14px;
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 10px;
+      z-index: 5;
+      backdrop-filter: blur(10px);
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      min-width: 240px;
+    }
+    .logo{
+      width:40px; height:40px; border-radius: 14px;
+      background:
+        linear-gradient(135deg, rgba(124,92,255,.95), rgba(46,230,214,.85));
+      display:grid; place-items:center;
+      box-shadow: 0 10px 30px rgba(124,92,255,.25);
+      border: 1px solid rgba(255,255,255,.18);
+    }
+    .logo span{ font-weight:800; }
+    .brand h1{
+      font-size: 15px;
+      margin: 0;
+      line-height: 1.15;
+      letter-spacing: .2px;
+    }
+    .brand .sub{
+      display:block;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    .top-actions{
+      display:flex; align-items:center; gap:10px;
+      flex-wrap: wrap;
+      justify-content:flex-end;
+    }
+
+    /* Layout */
+    .grid{
+      display:grid;
+      grid-template-columns: 360px 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+    @media (max-width: 980px){
+      .grid{ grid-template-columns: 1fr; }
+      .brand{ min-width: auto; }
+      .topbar{ position: static; }
+    }
+
+    /* Panels */
+    .card{
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.05));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 14px;
+    }
+    .card h2{
+      margin: 0 0 10px 0;
+      font-size: 14px;
+      letter-spacing: .2px;
+      color: rgba(255,255,255,.88);
+      display:flex; align-items:center; gap:8px;
+    }
+    .muted{ color: var(--muted); font-size: 12.5px; line-height: 1.35; }
+
+    /* Inputs */
+    .row{ display:flex; gap:10px; flex-wrap: wrap; align-items:center; }
+    label{ font-size: 12.5px; color: var(--muted); }
+    input[type="file"]{
+      width: 100%;
+      padding: 10px;
+      border-radius: 14px;
+      border: 1px dashed rgba(255,255,255,.25);
+      background: rgba(0,0,0,.20);
+      color: var(--muted);
+    }
+    select, input[type="text"]{
+      width: 100%;
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(0,0,0,.22);
+      color: var(--text);
+      outline: none;
+    }
+    select:focus, input[type="text"]:focus{
+      border-color: rgba(124,92,255,.55);
+      box-shadow: 0 0 0 4px rgba(124,92,255,.18);
+    }
+
+    /* Buttons */
+    button{
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.08);
+      color: var(--text);
+      padding: 11px 12px;
+      border-radius: 14px;
+      cursor:pointer;
+      transition: transform .06s ease, background .15s ease, border-color .15s ease;
+      user-select:none;
+    }
+    button:hover{ background: rgba(255,255,255,.12); }
+    button:active{ transform: translateY(1px); }
+    button:disabled{
+      opacity: .45;
+      cursor: not-allowed;
+      transform:none;
+    }
+
+    .btn-primary{
+      background: linear-gradient(135deg, rgba(124,92,255,.95), rgba(124,92,255,.65));
+      border-color: rgba(124,92,255,.55);
+    }
+    .btn-primary:hover{ background: linear-gradient(135deg, rgba(124,92,255,1), rgba(124,92,255,.72)); }
+
+    .btn-ghost{
+      background: rgba(255,255,255,.06);
+    }
+
+    .pill{
+      display:inline-flex;
+      gap:6px;
+      align-items:center;
+      padding: 8px 10px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.20);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .kpi{
+      display:flex; gap:10px; flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    /* Quiz area */
+    #quiz{ display:none; }
+    .quiz-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    #meta{
+      color: var(--muted);
+      font-size: 12px;
+    }
+    #prompt{
+      margin: 6px 0 0 0;
+      font-size: 22px;
+      letter-spacing: .2px;
+      line-height: 1.15;
+    }
+    .prompt-box{
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(0,0,0,.22);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+    .prompt-tools{
+      display:flex; gap:10px; flex-wrap: wrap; align-items:center;
+    }
+
+    /* Choices */
+    .choices{
+      display:grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .choice{
+      text-align:left;
+      padding: 12px 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      transition: background .15s ease, border-color .15s ease, transform .06s ease;
+    }
+    .choice:hover{ background: rgba(255,255,255,.10); }
+    .choice:active{ transform: translateY(1px); }
+    .choice.disabled{ cursor: default; opacity: .92; }
+    .choice.correct{
+      border-color: rgba(38,208,124,.55);
+      background: rgba(38,208,124,.18);
+    }
+    .choice.wrong{
+      border-color: rgba(255,77,109,.55);
+      background: rgba(255,77,109,.18);
+    }
+
+    /* Feedback */
+    #feedback{
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 16px;
+      background: rgba(0,0,0,.22);
+      border: 1px solid rgba(255,255,255,.12);
+      min-height: 48px;
+    }
+    .ok{ color: var(--good); font-weight: 800; }
+    .bad{ color: var(--bad); font-weight: 800; }
+    .hint{ color: var(--muted); font-size: 12.5px; margin-top: 6px; }
+
+    .divider{
+      height:1px;
+      background: rgba(255,255,255,.10);
+      margin: 14px 0;
+    }
+
+    /* Bottom controls */
+    .bottom-controls{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .bottom-controls .left, .bottom-controls .right{
+      display:flex; gap:10px; flex-wrap: wrap; align-items:center;
+    }
+
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono";
+      font-size: 12px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.75);
+    }
+
+    /* Small helper blocks */
+    .mini{
+      font-size: 12px;
+      color: var(--muted2);
+      line-height: 1.35;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo"><span>Q</span></div>
+        <div>
+          <h1>English Quiz <span class="sub">Excel’den • EN→TR Şıklı / TR→EN Yazmalı</span></h1>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <span class="pill">Klavye: <span class="kbd">→</span> sonraki • <span class="kbd">1-4</span> şık • <span class="kbd">Enter</span> kontrol</span>
+        <span class="pill">Ses: EN→TR’de otomatik</span>
+      </div>
+    </div>
+
+    <div class="grid">
+      <!-- LEFT: Settings -->
+      <div class="card">
+        <h2>⚙️ Ayarlar</h2>
+
+        <div class="row" style="margin-bottom:10px">
+          <input id="file" type="file" accept=".xlsx,.xls" />
+        </div>
+
+        <div class="row" style="margin-top:8px">
+          <div style="flex:1; min-width: 160px;">
+            <label>Mod</label>
+            <select id="direction">
+              <option value="EN_TR">English → Türkçe</option>
+              <option value="TR_EN">Türkçe → English</option>
+            </select>
+          </div>
+
+          <div style="flex:1; min-width: 160px;">
+            <label>Soru tipi</label>
+            <select id="qtype">
+              <option value="MCQ">4 Şıklı</option>
+              <option value="TYPE">Yazmalı</option>
+              <option value="MIX">Karışık</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row" style="margin-top:10px">
+          <div style="flex:1; min-width: 160px;">
+            <label>Quiz kaynağı</label>
+            <select id="sourceMode">
+              <option value="ALL">Tüm sorular</option>
+              <option value="WRONG_ONLY">❌ Sadece yanlışlar</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="muted">
+          Excel’de ilk sayfada iki sütun olmalı:
+          <b>English</b> / <b>Turkish</b> (ya da <b>İngilizce</b> / <b>Türkçe</b>).
+        </div>
+
+        <div class="divider"></div>
+
+        <h2>📊 İstatistik</h2>
+        <div class="kpi">
+          <span class="pill"><b>Skor:</b>&nbsp;<span id="score">0</span>/<span id="total">0</span></span>
+          <span class="pill">Yanlış havuzu: <b id="wrongCount">0</b></span>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="row">
+          <button id="start" class="btn-primary" disabled>Başlat</button>
+          <button id="next" class="btn-ghost" disabled>Sonraki</button>
+          <button id="reset" class="btn-ghost" disabled>Sıfırla</button>
+        </div>
+
+        <div class="mini" style="margin-top:10px">
+          İpucu: “Sadece yanlışlar” seçtiğinde havuz boşsa önce yanlış yapman gerekir 🙂
+        </div>
+      </div>
+
+      <!-- RIGHT: Quiz -->
+      <div class="card" id="quiz" style="display:none">
+        <div class="quiz-head">
+          <div class="muted" id="meta"></div>
+          <div class="prompt-tools">
+            <button id="speakBtn" class="btn-ghost" type="button">🔊 Tekrar</button>
+          </div>
+        </div>
+
+        <div class="prompt-box">
+          <h3 id="prompt"></h3>
+        </div>
+
+        <div id="mcq" style="display:none">
+          <div class="choices" id="choices"></div>
+        </div>
+
+        <div id="typing" style="display:none; margin-top:12px">
+          <input id="answerInput" type="text" placeholder="Cevabını yaz..." autocomplete="off" />
+          <div class="row" style="margin-top:10px">
+            <button id="check" class="btn-primary">Kontrol Et</button>
+            <button id="show" class="btn-ghost">Cevabı Göster</button>
+          </div>
+        </div>
+
+        <div id="feedback"></div>
+
+        <div class="divider"></div>
+
+        <div class="bottom-controls">
+          <div class="left">
+            <span class="pill">Kısayollar:
+              <span class="kbd">→</span> sonraki •
+              <span class="kbd">R</span> tekrar oku •
+              <span class="kbd">Esc</span> sıfırla
+            </span>
+          </div>
+          <div class="right">
+            <span class="pill">Şıklı mod: <span class="kbd">1</span><span class="kbd">2</span><span class="kbd">3</span><span class="kbd">4</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SheetJS -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+  <script>
+    // -------- State --------
+    let pairs = [];           // [{en,tr}]
+    let wrongIds = new Set(); // unique wrong pool (by id)
+    let wrongList = [];       // [{id,en,tr}]
+    let current = null;       // {id, prompt, answer, qtype, en, tr}
+    let score = 0;
+    let total = 0;
+    let lastMCQButtons = [];  // current choices buttons cache
+>>>>>>> d08d4c9 (updete-theme)
 
     const el = (id) => document.getElementById(id);
 
@@ -131,6 +569,7 @@
       return a;
     }
 
+<<<<<<< HEAD
     // -------- Speech (EN→TR şıklı sorularda İngilizce prompt okunur) --------
     let cachedVoices = [];
     function loadVoices() {
@@ -165,13 +604,18 @@
       window.speechSynthesis.speak(utter);
     }
 
+=======
+>>>>>>> d08d4c9 (updete-theme)
     function updateStats() {
       el("score").textContent = String(score);
       el("total").textContent = String(total);
       el("wrongCount").textContent = String(wrongList.length);
+<<<<<<< HEAD
       el("poolLabel").textContent = (el("sourceMode").value === "WRONG_ONLY") ? "Yanlışlar" : "Tüm sorular";
       const mode = el("direction").value;
       el("modeLabel").textContent = (mode === "EN_TR") ? "EN→TR" : "TR→EN";
+=======
+>>>>>>> d08d4c9 (updete-theme)
     }
 
     function setFeedback(html) {
@@ -182,11 +626,20 @@
       el("quiz").style.display = show ? "block" : "none";
     }
 
+<<<<<<< HEAD
+=======
+    function decideQType(selected) {
+      if (selected === "MIX") return Math.random() < 0.5 ? "MCQ" : "TYPE";
+      return selected;
+    }
+
+>>>>>>> d08d4c9 (updete-theme)
     function makeId(en, tr) {
       return normalize(en) + "||" + normalize(tr);
     }
 
     function getPool() {
+<<<<<<< HEAD
       if (el("sourceMode").value === "WRONG_ONLY") return wrongList;
       return pairs.map(p => ({ ...p, id: makeId(p.en, p.tr) }));
     }
@@ -197,6 +650,19 @@
     }
 
     function buildMCQ(correctAnswer, correctId) {
+=======
+      const mode = el("sourceMode").value;
+      if (mode === "WRONG_ONLY") return wrongList;
+      return pairs.map(p => ({...p, id: makeId(p.en, p.tr)}));
+    }
+
+    function getQA(item, direction) {
+      if (direction === "EN_TR") return { prompt: item.en, answer: item.tr };
+      return { prompt: item.tr, answer: item.en };
+    }
+
+    function buildMCQ(correctAnswer, direction, correctId) {
+>>>>>>> d08d4c9 (updete-theme)
       const options = [correctAnswer];
       const used = new Set([normalize(correctAnswer)]);
 
@@ -207,10 +673,17 @@
         const id = makeId(p.en, p.tr);
         if (id === correctId) continue;
 
+<<<<<<< HEAD
         const ans = p.tr; // EN_TR için yanlışlar Türkçe
         const key = normalize(ans);
         if (!key || used.has(key)) continue;
 
+=======
+        const qa = getQA({ ...p, id }, direction);
+        const ans = qa.answer;
+        const key = normalize(ans);
+        if (!key || used.has(key)) continue;
+>>>>>>> d08d4c9 (updete-theme)
         used.add(key);
         options.push(ans);
       }
@@ -221,6 +694,7 @@
       if (wrongIds.has(id)) return;
       wrongIds.add(id);
       wrongList.push({ id, en, tr });
+<<<<<<< HEAD
       updateStats();
     }
 
@@ -293,11 +767,61 @@
       `;
     }
 
+=======
+    }
+
+    // -------- Speech (EN only prompt) --------
+    let cachedVoices = [];
+    function loadVoices() {
+      try { cachedVoices = window.speechSynthesis?.getVoices?.() || []; }
+      catch { cachedVoices = []; }
+    }
+    if ("speechSynthesis" in window) {
+      loadVoices();
+      window.speechSynthesis.onvoiceschanged = () => loadVoices();
+    }
+
+    function pickEnglishVoice() {
+      const v = cachedVoices || [];
+      const prefer = ["en-GB", "en-US", "en"];
+      for (const p of prefer) {
+        const found = v.find(x => (x.lang || "").toLowerCase() === p.toLowerCase());
+        if (found) return found;
+      }
+      return v.find(x => (x.lang || "").toLowerCase().startsWith("en-")) || null;
+    }
+
+    function speakEnglish(text) {
+      if (!text) return;
+      if (!("speechSynthesis" in window)) return;
+
+      // only speak when mode is EN_TR (prompt is English)
+      const direction = el("direction").value;
+      if (direction !== "EN_TR") return;
+
+      try {
+        window.speechSynthesis.cancel();
+        const utter = new SpeechSynthesisUtterance(text);
+        const voice = pickEnglishVoice();
+        if (voice) utter.voice = voice;
+        utter.lang = voice?.lang || "en-GB";
+        utter.rate = 0.9;
+        utter.pitch = 1.0;
+        utter.volume = 1;
+        window.speechSynthesis.speak(utter);
+      } catch (e) {
+        // ignore
+      }
+    }
+
+    // -------- Render --------
+>>>>>>> d08d4c9 (updete-theme)
     function renderQuestion() {
       if (!current) return;
 
       showQuizUI(true);
       el("prompt").textContent = current.prompt;
+<<<<<<< HEAD
       setFeedback("");
 
       const isENTR = current.mode === "EN_TR";
@@ -320,12 +844,41 @@
 
         // ✅ SES: Şıklı (EN→TR) soruda İngilizce prompt'u otomatik oku
         speakEnglish(current.prompt);
+=======
+      el("meta").textContent = `Soru tipi: ${current.qtype === "MCQ" ? "4 Şıklı" : "Yazmalı"}`;
+      setFeedback("");
+      lastMCQButtons = [];
+
+      el("mcq").style.display = current.qtype === "MCQ" ? "block" : "none";
+      el("typing").style.display = current.qtype === "TYPE" ? "block" : "none";
+
+      if (current.qtype === "MCQ") {
+        const direction = el("direction").value;
+        const opts = buildMCQ(current.answer, direction, current.id);
+
+        const container = el("choices");
+        container.innerHTML = "";
+        opts.forEach((opt, idx) => {
+          const btn = document.createElement("button");
+          btn.className = "choice";
+          btn.textContent = opt;
+          btn.setAttribute("data-index", String(idx + 1));
+          btn.onclick = () => checkMCQ(opt, btn);
+          container.appendChild(btn);
+          lastMCQButtons.push(btn);
+        });
+>>>>>>> d08d4c9 (updete-theme)
       } else {
         el("answerInput").value = "";
         el("answerInput").focus();
       }
 
+<<<<<<< HEAD
       updateStats();
+=======
+      // Speak (EN only)
+      speakEnglish(current.prompt);
+>>>>>>> d08d4c9 (updete-theme)
     }
 
     function nextQuestion() {
@@ -335,34 +888,91 @@
         return;
       }
 
+<<<<<<< HEAD
       const item = pool[Math.floor(Math.random() * pool.length)];
       const mode = el("direction").value; // kullanıcı seçiyor
       const qa = getQA(item, mode);
+=======
+      const direction = el("direction").value;
+      const qtypeSelected = el("qtype").value;
+
+      // Requirement: EN_TR can be MCQ; TR_EN can be TYPE if user selects MIX etc.
+      // We keep user selection but make it predictable:
+      // If direction is TR_EN and user selected MCQ, we still allow MCQ (user choice),
+      // but your preference earlier was TR_EN = TYPE. If you want strict behavior, tell me.
+      const qtype = decideQType(qtypeSelected);
+
+      const item = pool[Math.floor(Math.random() * pool.length)];
+      const qa = getQA(item, direction);
+>>>>>>> d08d4c9 (updete-theme)
 
       current = {
         id: item.id ?? makeId(item.en, item.tr),
         en: item.en,
         tr: item.tr,
+<<<<<<< HEAD
         mode,
         prompt: qa.prompt,
         answer: qa.answer
+=======
+        prompt: qa.prompt,
+        answer: qa.answer,
+        qtype
+>>>>>>> d08d4c9 (updete-theme)
       };
 
       renderQuestion();
     }
 
+<<<<<<< HEAD
     function checkMCQ(selected) {
       total++;
       const ok = normalize(selected) === normalize(current.answer);
 
       highlightMCQ(selected);
+=======
+    function lockMCQButtons() {
+      lastMCQButtons.forEach(b => {
+        b.classList.add("disabled");
+        b.disabled = true;
+      });
+    }
+
+    function colorMCQ(selectedBtn, ok) {
+      // highlight chosen + correct answer
+      const correctText = normalize(current.answer);
+
+      lastMCQButtons.forEach(b => {
+        const isCorrect = normalize(b.textContent) === correctText;
+        if (isCorrect) b.classList.add("correct");
+      });
+
+      if (!ok && selectedBtn) {
+        selectedBtn.classList.add("wrong");
+      }
+      if (ok && selectedBtn) {
+        selectedBtn.classList.add("correct");
+      }
+    }
+
+    function checkMCQ(selected, btnRef) {
+      total++;
+      const ok = normalize(selected) === normalize(current.answer);
+
+      lockMCQButtons();
+      colorMCQ(btnRef, ok);
+>>>>>>> d08d4c9 (updete-theme)
 
       if (ok) {
         score++;
         setFeedback(`<div class="ok">✅ Doğru</div>`);
       } else {
         markWrongById(current.id, current.en, current.tr);
+<<<<<<< HEAD
         setFeedback(`<div class="bad">❌ Yanlış</div><div class="muted">Doğru cevap: <b>${current.answer}</b></div>`);
+=======
+        setFeedback(`<div class="bad">❌ Yanlış</div><div class="hint">Doğru cevap: <b>${current.answer}</b></div>`);
+>>>>>>> d08d4c9 (updete-theme)
       }
       updateStats();
     }
@@ -377,11 +987,26 @@
         setFeedback(`<div class="ok">✅ Doğru</div>`);
       } else {
         markWrongById(current.id, current.en, current.tr);
+<<<<<<< HEAD
         setFeedback(`<div class="bad">❌ Yanlış</div>${buildDiff(typed, current.answer)}`);
+=======
+
+        // "Nerede yanlış yazdığımı göster" → basit fark vurgusu
+        const a = (typed ?? "").toString();
+        const b = (current.answer ?? "").toString();
+        const diff = highlightDiff(a, b);
+
+        setFeedback(
+          `<div class="bad">❌ Yanlış</div>
+           <div class="hint">Senin cevap: ${diff.user}</div>
+           <div class="hint">Doğru: <b>${diff.correct}</b></div>`
+        );
+>>>>>>> d08d4c9 (updete-theme)
       }
       updateStats();
     }
 
+<<<<<<< HEAD
     function showAnswer() {
       if (!current) return;
       if (current.mode === "EN_TR") {
@@ -391,6 +1016,29 @@
         const typed = el("answerInput").value;
         setFeedback(`<div class="muted">Doğru cevap: <b>${current.answer}</b></div>${buildDiff(typed, current.answer)}`);
       }
+=======
+    function highlightDiff(user, correct) {
+      // simple character-level highlight (first mismatch onwards)
+      const u = user;
+      const c = correct;
+      let i = 0;
+      const min = Math.min(u.length, c.length);
+      while (i < min && u[i].toLowerCase() === c[i].toLowerCase()) i++;
+
+      const safe = (s) => s.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;");
+      const before = safe(u.slice(0, i));
+      const wrongPart = safe(u.slice(i));
+      const userHtml = wrongPart ? `${before}<span style="color: var(--bad); font-weight:800;">${wrongPart}</span>` : safe(u);
+
+      return {
+        user: `<code style="background:rgba(255,255,255,.06);padding:2px 6px;border-radius:8px;border:1px solid rgba(255,255,255,.12);">${userHtml || "<i>(boş)</i>"}</code>`,
+        correct: safe(c)
+      };
+    }
+
+    function showAnswer() {
+      setFeedback(`<div class="hint">Cevap: <b>${current?.answer ?? ""}</b></div>`);
+>>>>>>> d08d4c9 (updete-theme)
     }
 
     function resetAll() {
@@ -408,6 +1056,7 @@
       el("reset").disabled = pairs.length < 4;
     }
 
+<<<<<<< HEAD
     // yanlışlar moduna geçince
     el("sourceMode").addEventListener("change", () => {
       updateStats();
@@ -427,6 +1076,8 @@
       if (current) nextQuestion();
     });
 
+=======
+>>>>>>> d08d4c9 (updete-theme)
     // ---------- Excel Load ----------
     el("file").addEventListener("change", async (e) => {
       const file = e.target.files?.[0];
@@ -487,6 +1138,7 @@
       el("next").disabled = false;
       nextQuestion();
     });
+<<<<<<< HEAD
     el("next").addEventListener("click", () => nextQuestion());
     el("reset").addEventListener("click", () => resetAll());
 
@@ -522,6 +1174,62 @@
     });
 
     updateStats();
+=======
+
+    el("next").addEventListener("click", () => nextQuestion());
+    el("reset").addEventListener("click", () => resetAll());
+    el("check").addEventListener("click", () => checkTyping());
+    el("show").addEventListener("click", () => showAnswer());
+    el("speakBtn").addEventListener("click", () => {
+      if (current) speakEnglish(current.prompt);
+    });
+
+    // Enter to check in typing (already), but DO NOT use space to show answer.
+    el("answerInput").addEventListener("keydown", (e) => {
+      if (e.key === "Enter") checkTyping();
+      // space is allowed for typing; no special action here
+    });
+
+    // ---------- Global keyboard shortcuts ----------
+    document.addEventListener("keydown", (e) => {
+      // avoid interfering when user is typing in input
+      const isTyping = document.activeElement === el("answerInput");
+
+      // ESC = reset
+      if (e.key === "Escape") {
+        e.preventDefault();
+        resetAll();
+        return;
+      }
+
+      // R = repeat speech
+      if ((e.key === "r" || e.key === "R") && !isTyping) {
+        if (current) speakEnglish(current.prompt);
+        return;
+      }
+
+      // ArrowRight = next question
+      if (e.key === "ArrowRight") {
+        if (!el("next").disabled) {
+          e.preventDefault();
+          nextQuestion();
+        }
+        return;
+      }
+
+      // MCQ: 1-4 choose options
+      if (!isTyping && current && current.qtype === "MCQ") {
+        const n = Number(e.key);
+        if (n >= 1 && n <= 4) {
+          const btn = lastMCQButtons[n - 1];
+          if (btn && !btn.disabled) {
+            e.preventDefault();
+            btn.click();
+          }
+        }
+      }
+    });
+>>>>>>> d08d4c9 (updete-theme)
   </script>
 </body>
 </html>
