@@ -1,1 +1,1 @@
-https://elmasturaci-design.github.io/quiz/
+https://eltudia.github.io/quiz/
